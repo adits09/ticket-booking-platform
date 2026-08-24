@@ -13,7 +13,8 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const s = io('http://localhost:5001', {
+    const SOCKET_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001';
+    const s = io(SOCKET_URL, {
       autoConnect: true,
       reconnectionAttempts: 5,
     });

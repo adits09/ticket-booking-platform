@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { apiFetch } from '../api/client';
-import { Search, Filter, Calendar, MapPin, Film, Music } from 'lucide-react';
+import { Search, Filter, Calendar, MapPin, Film, Music, RotateCcw } from 'lucide-react';
 
 export const EventListingPage: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]);
@@ -39,6 +39,18 @@ export const EventListingPage: React.FC = () => {
   const handleFilterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetchEvents();
+  };
+
+  const handleClearFilters = () => {
+    setSearch('');
+    setEventType('');
+    setVenueId('');
+    setDate('');
+    setLoading(true);
+    apiFetch('/events')
+      .then(setEvents)
+      .catch(console.error)
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -102,14 +114,30 @@ export const EventListingPage: React.FC = () => {
         >
           Filter
         </button>
+
+        {(search || eventType || venueId || date) && (
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border border-slate-700"
+          >
+            <RotateCcw className="w-3.5 h-3.5" /> Clear Filters
+          </button>
+        )}
       </form>
 
       {/* Grid */}
       {loading ? (
         <div className="text-center py-12 text-slate-400">Loading events...</div>
       ) : events.length === 0 ? (
-        <div className="text-center py-16 bg-slate-900/50 rounded-2xl border border-slate-800 text-slate-400">
-          No events found matching your criteria.
+        <div className="text-center py-16 bg-slate-900/50 rounded-2xl border border-slate-800 space-y-4">
+          <p className="text-slate-400 text-sm">No events found matching your filter criteria.</p>
+          <button
+            onClick={handleClearFilters}
+            className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition"
+          >
+            <RotateCcw className="w-4 h-4" /> Reset Filters & View All Upcoming Shows
+          </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
