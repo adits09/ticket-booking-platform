@@ -1,0 +1,18 @@
+# Node dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment secrets
+.env
+backend/.env
+
+# Build outputs
+dist/
+backend/dist/
+frontend/dist/
+
+# Zip files and logs
+*.zip
+*.log
+.DS_Store
