@@ -4,6 +4,13 @@ A full-stack, production-quality ticket booking platform for movies and concerts
 
 ---
 
+## 🌐 Live Production Deployment
+- 💻 **Live Frontend Application**: [https://ticket-booking-platform-frontend-a6di08fg0.vercel.app](https://ticket-booking-platform-frontend-a6di08fg0.vercel.app)
+- ⚡ **Live Backend API**: [https://ticket-booking-platform-ioa0.onrender.com](https://ticket-booking-platform-ioa0.onrender.com)
+- 🐘 **Cloud PostgreSQL Database**: Neon.tech Managed Database Cluster
+
+---
+
 ## 1. Project Overview
 High-demand events sell out instantly, leaving customers frustrated by race conditions and unhandled cancellations. This platform provides:
 - Interactive visual seat maps with real-time seat availability syncing across clients.
