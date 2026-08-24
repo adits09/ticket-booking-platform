@@ -33,7 +33,10 @@ export const EventListingPage: React.FC = () => {
 
   useEffect(() => {
     apiFetch('/venues').then(setVenues).catch(console.error);
-    fetchEvents();
+    apiFetch('/events')
+      .then(setEvents)
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
   const handleFilterSubmit = (e: React.FormEvent) => {
