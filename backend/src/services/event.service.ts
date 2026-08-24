@@ -97,6 +97,7 @@ export const getEvents = async (filters: {
   if (filters.date) {
     const startDate = new Date(filters.date);
     startDate.setHours(0, 0, 0, 0);
+    startDate.setDate(startDate.getDate() - 1);
     where.date = { gte: startDate };
   }
   if (filters.search) {
