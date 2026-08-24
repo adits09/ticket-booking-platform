@@ -197,6 +197,40 @@ async function main() {
   });
   await prisma.eventSeat.createMany({ data: concertEventSeats });
 
+  // 6. Create Today's Show: "Dune: Part Two (Special Screening)"
+  const todayDate = new Date();
+  const duneEvent = await prisma.event.create({
+    data: {
+      title: 'Dune: Part Two (Special Premiere)',
+      description: 'Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.',
+      eventType: EventType.MOVIE,
+      date: todayDate,
+      startTime: '21:00',
+      endTime: '23:45',
+      posterUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
+      venueId: venue1.id,
+      organiserId: organiser.id,
+      categoryPrices: { VIP: 600, PREMIUM: 400, STANDARD: 250 },
+    },
+  });
+
+  const duneEventSeats = venue1Seats.map((seat) => {
+    let price = 250;
+    if (seat.category === SeatCategory.VIP) price = 600;
+    if (seat.category === SeatCategory.PREMIUM) price = 400;
+
+    return {
+      eventId: duneEvent.id,
+      seatId: seat.id,
+      rowLabel: seat.rowLabel,
+      seatNumber: seat.seatNumber,
+      category: seat.category,
+      price,
+      status: SeatStatus.AVAILABLE,
+    };
+  });
+  await prisma.eventSeat.createMany({ data: duneEventSeats });
+
   console.log('✅ Events & Event Seats seeded successfully!');
 
   // 6. Create Initial System Settings
